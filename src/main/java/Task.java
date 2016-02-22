@@ -4,6 +4,7 @@ import org.sql2o.*;
 public class Task {
 
   private int id;
+  private int categoryId;
   private String description;
 
   @Override
@@ -12,7 +13,7 @@ public class Task {
       return false;
     } else {
       Task newTask = (Task) otherTask;
-      return this.getDescription().equals(newTask.getDescription()) && this.getId() == newTask.getId();
+      return this.getDescription().equals(newTask.getDescription()) && this.getId() == newTask.getId() && this.getCategoryId() == newTask.getCategoryId();
     }
   }
 
@@ -20,18 +21,23 @@ public class Task {
     return id;
   }
 
+  public int getCategoryId() {
+    return categoryId;
+  }
+
   public String getDescription() {
     return description;
   }
 
-  public Task(String description) {
+  public Task(String description, int categoryId) {
     this.description = description;
+    this.categoryId = categoryId;
   }
 
   //DATABASE STUFF BELOW
 
   public static List<Task> all() {
-    String sql = "SELECT id, description FROM Tasks";
+    String sql = "SELECT id, description, categoryId FROM Tasks";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Task.class);
     }
@@ -39,9 +45,10 @@ public class Task {
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO Tasks (description) VALUES (:description)";
+      String sql = "INSERT INTO Tasks (description, categoryId) VALUES (:description, :categoryId)";
       id = (int) con.createQuery(sql, true)
         .addParameter("description", description)
+        .addParameter("categoryId", categoryId)
         .executeUpdate()
         .getKey();
     }
@@ -56,4 +63,6 @@ public class Task {
       return task;
     }
   }
+
+  
  }

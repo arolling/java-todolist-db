@@ -12,7 +12,7 @@ public class Task {
       return false;
     } else {
       Task newTask = (Task) otherTask;
-      return this.getDescription().equals(newTask.getDescription());
+      return this.getDescription().equals(newTask.getDescription()) && this.getId() == newTask.getId();
     }
   }
 
@@ -29,7 +29,7 @@ public class Task {
   }
 
   //DATABASE STUFF BELOW
-  
+
   public static List<Task> all() {
     String sql = "SELECT id, description FROM Tasks";
     try(Connection con = DB.sql2o.open()) {
@@ -38,11 +38,22 @@ public class Task {
   }
 
   public void save() {
-  try(Connection con = DB.sql2o.open()) {
-    String sql = "INSERT INTO Tasks (description) VALUES (:description)";
-    con.createQuery(sql)
-      .addParameter("description", description)
-      .executeUpdate();
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO Tasks (description) VALUES (:description)";
+      id = (int) con.createQuery(sql, true)
+        .addParameter("description", description)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public static Task find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM Tasks WHERE id = :id";
+      Task task = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Task.class);
+      return task;
     }
   }
  }

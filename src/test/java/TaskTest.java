@@ -58,4 +58,23 @@ public class TaskTest {
     assertEquals(savedTask.getCategoryId(), myCategory.getId());
   }
 
+  @Test
+  public void update_changesTaskDescription_false() {
+    Task myTask = new Task("Feed the chickens", 1);
+    myTask.save();
+    myTask.update("Feed the cats");
+    Task updatedTask = Task.find(myTask.getId());
+    assertFalse(updatedTask.equals(myTask));
+  }
+
+  @Test
+  public void delete_removesTaskFromDatabase_false() {
+    Task myTask = new Task("Feed the chickens", 1);
+    Task secondTask = new Task("Mow the lawn", 1);
+    myTask.save();
+    secondTask.save();
+    myTask.delete();
+    assertFalse(Task.all().contains(myTask));
+  }
+
 }

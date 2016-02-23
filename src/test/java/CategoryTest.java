@@ -36,7 +36,7 @@ public class CategoryTest {
   }
 
   @Test
-  public void getTasks_retrievesALlTasksFromDatabase_tasksList() {
+  public void getTasks_retrievesAllTasksFromDatabase_tasksList() {
     Category myCategory = new Category("Household chores");
     myCategory.save();
     Task firstTask = new Task("Mow the lawn", myCategory.getId());

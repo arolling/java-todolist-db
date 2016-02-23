@@ -16,6 +16,9 @@ public class AppTest extends FluentTest {
   @ClassRule
   public static ServerRule server = new ServerRule();
 
+  // @Rule
+  // public DatabaseRule database = new DatabaseRule();
+
   @Test
   public void rootTest() {
       goTo("http://localhost:4567/");

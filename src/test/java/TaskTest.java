@@ -1,5 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.time.LocalDateTime;
 
 public class TaskTest {
 
@@ -77,4 +78,18 @@ public class TaskTest {
     assertFalse(Task.all().contains(myTask));
   }
 
+  @Test
+  public void getCreatedAt_instantiatesWithCurrentTime_today() {
+    Task myTask = new Task("Mow the lawn", 1);
+    assertEquals(LocalDateTime.now().getDayOfWeek(), myTask.getCreatedAt().toLocalDateTime().getDayOfWeek());
+  }
+
+
+  // @Test
+  // public void addDueDate_addsDueDate() {
+  //   Task myTask = new Task("Eat your spinach", 2);
+  //   myTask.addDueDate("Feb/23 10:30");
+  //   myTask.save();
+  //   assertEquals(myTask.getDueDate(), "Feb/23 10:30");
+  // }
 }

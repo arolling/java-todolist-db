@@ -1,10 +1,12 @@
-# Title
+# Java To Do List
 
-#### Description and Date
+#### Java-based to do list using a SQL database
 
-#### Authors
+#### by Abby Rolling & Michelle Brecunier
 
 ## Description
+
+A To Do list application using Java and SQL.
 
 ## Setup/Installation Requirements
 
@@ -22,7 +24,7 @@
 
 ## Technologies Used
 
-Java, Spark, Junit, Velocity, Fluentlenium, Bootstrap
+Java, Spark, Junit, Velocity, Fluentlenium, SQL
 
 ### License
 
